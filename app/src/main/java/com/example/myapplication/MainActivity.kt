@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         )
         setContentView(R.layout.activity_main)
 
-
         //targeting the mapbox mapview
         mapview = findViewById(R.id.map)
         mapview.onCreate(savedInstanceState)
@@ -64,8 +63,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         //locationService
         locationObject = locationUpdate(this)
-        editText_Longitude.setText(locationObject.accurateLocation!!.latitude.toString())
-        editText_Latitude.setText(locationObject.accurateLocation!!.longitude.toString())
 
         //button listners
         fab_user_location.setOnClickListener {
@@ -73,9 +70,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         but_navigation.setOnClickListener {
+            destination = Point.fromLngLat(editText_Longitude.text.toString().toDouble(), editText_Latitude.text.toString().toDouble())
             getRoute()
-            destination = Point.fromLngLat(73.040607, 19.023230)
-            it.visibility = View.GONE
             findViewById<Button>(R.id.but_launch).visibility = View.VISIBLE
         }
 
@@ -92,8 +88,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         map.setStyle(Style.MAPBOX_STREETS, Style.OnStyleLoaded {
             enableUserLocationView(it)
         })
-        origin =
-            Point.fromLngLat(locationObject.accurateLocation!!.longitude, locationObject.accurateLocation!!.latitude)
+        origin = Point.fromLngLat(locationObject.accurateLocation!!.longitude, locationObject.accurateLocation!!.latitude)
+
     }
 
     /*     Mmodular Functions */

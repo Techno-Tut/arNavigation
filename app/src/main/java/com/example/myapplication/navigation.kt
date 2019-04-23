@@ -76,7 +76,7 @@ class navigation : AppCompatActivity(),RouteListener,ProgressChangeListener, Off
             ModelPerformanceConfig.Merged(ModelPerformance.On(ModelPerformanceMode.DYNAMIC, ModelPerformanceRate.HIGH))
         )
         VisionManager.start(object : VisionEventsListener {})
-      //  VisionManager.setVideoSourceListener(vision_ar_view)
+        VisionManager.setVideoSourceListener(vision_ar_view)
         VisionArManager.create(VisionManager, vision_ar_view)
     }
 

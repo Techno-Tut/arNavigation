@@ -30,10 +30,13 @@
             android:text="@string/start_trip"
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/but_launch"
-            mapbox:layout_constraintEnd_toStartOf="@+id/fab_user_location" android:layout_marginEnd="8dp"
-            mapbox:layout_constraintBottom_toBottomOf="@+id/map" android:layout_marginBottom="32dp"
-            mapbox:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            android:backgroundTint="#FF9800" android:elevation="5dp" android:visibility="gone"/>
+            android:backgroundTint="#FF9800" android:elevation="5dp" android:visibility="gone"
+            tools:visibility="gone"
+            mapbox:layout_constraintEnd_toEndOf="@+id/but_navigation"
+            mapbox:layout_constraintStart_toStartOf="parent"
+            mapbox:layout_constraintEnd_toStartOf="@+id/fab_user_location"
+            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+            mapbox:layout_constraintBottom_toTopOf="@+id/but_navigation" android:layout_marginStart="8dp"/>
     <android.support.design.widget.FloatingActionButton
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -41,7 +44,7 @@
             android:id="@+id/fab_user_location"
             mapbox:layout_constraintBottom_toBottomOf="parent" mapbox:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="32dp" android:layout_marginBottom="32dp" mapbox:backgroundTint="#03A9F4"
-            android:scaleType="fitStart" mapbox:fabSize="normal" android:src="@drawable/currentlocation"/>
+            android:scaleType="fitStart" mapbox:fabSize="normal"/>
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" mapbox:layout_constraintStart_toStartOf="parent"
@@ -75,7 +78,7 @@
                     android:textAlignment="textStart" android:backgroundTint="#6F6C6C" android:hint="@string/logitude"
                     android:autofillHints=""
                     mapbox:layout_constraintStart_toEndOf="@+id/imageView2" android:layout_marginStart="8dp"
-                    android:fontFamily="sans-serif-light"/>
+                    android:fontFamily="sans-serif-light" android:text="73.040670"/>
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -91,7 +94,7 @@
                     mapbox:layout_constraintBottom_toBottomOf="parent" android:backgroundTint="#6F6C6C"
                     android:hint="@string/latitude" android:importantForAutofill="no"
                     mapbox:layout_constraintStart_toEndOf="@+id/imageView2" android:layout_marginStart="8dp"
-                    android:fontFamily="sans-serif-light"/>
+                    android:fontFamily="sans-serif-light" android:text="19.023230"/>
         </android.support.constraint.ConstraintLayout>
     </FrameLayout>
 
