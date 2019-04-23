@@ -1,14 +1,20 @@
 package com.example.myapplication
 
+import android.location.Location
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.mapbox.android.core.location.LocationEngine
+import android.widget.Toast
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.api.directions.v5.models.DirectionsRoute
 import com.mapbox.geojson.Point
 import com.mapbox.services.android.navigation.v5.navigation.MapboxNavigation
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute
+import com.mapbox.services.android.navigation.v5.offroute.OffRouteListener
+import com.mapbox.services.android.navigation.v5.route.RouteFetcher
+import com.mapbox.services.android.navigation.v5.route.RouteListener
+import com.mapbox.services.android.navigation.v5.routeprogress.ProgressChangeListener
+import com.mapbox.services.android.navigation.v5.routeprogress.RouteProgress
 import com.mapbox.vision.VisionManager
 import com.mapbox.vision.ar.VisionArManager
 import com.mapbox.vision.ar.core.models.Route
@@ -24,16 +30,18 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class navigation : AppCompatActivity() {
+class navigation : AppCompatActivity(),RouteListener,ProgressChangeListener, OffRouteListener {
+
+
 
     //origin and destination
     lateinit var mapboxNavigation: MapboxNavigation
     lateinit var directionRoute: DirectionsRoute
-    //  lateinit var routeFetcher: RouteFetcher
+    lateinit var routeFetcher: RouteFetcher
+    lateinit var lastRouteProgress: RouteProgress
     lateinit var locationObject: locationUpdate
     lateinit var origin: Point
     lateinit var destination: Point
-    lateinit var arLocationEngine: LocationEngine
     val acess_token = "sk.eyJ1IjoidGVjaG5vdHV0IiwiYSI6ImNqdXFwbmpoOTBrMDE0MG8wbmhja3ZobjIifQ.PqLwMAjpoKNJ6mwaZd8brA"
 
     var visionListner: visionLisnter = visionLisnter()
@@ -53,6 +61,8 @@ class navigation : AppCompatActivity() {
             this, "pk.eyJ1IjoidGVjaG5vdHV0IiwiYSI6ImNqdW1yMTdhYjA4cnQ0ZXBwcXFqOWl2YzUifQ.k4Kew7sdjpthA1Wd2BDW2A"
         )
 
+        routeFetcher = RouteFetcher(applicationContext, getString(R.string.acess_token))
+        routeFetcher.addRouteListener(this)
 
     }
 
@@ -111,6 +121,41 @@ class navigation : AppCompatActivity() {
             })
     }
 
+    override fun onResponseReceived(response: DirectionsResponse?, routeProgress: RouteProgress?) {
+        mapboxNavigation.stopNavigation()
+        if(response!!.routes().isEmpty()) {
+            return
+        } else {
+            mapboxNavigation.startNavigation(response.routes()[0])
+            val route = response.routes().first()
+            VisionArManager.setRoute(
+                Route(
+                    route.getRoutePoints(),
+                    route.duration()?.toFloat() ?: 0f,
+                    "",
+                    ""
+                )
+            )
+        }
+    }
+
+    override fun onErrorReceived(throwable: Throwable?) {
+        throwable?.printStackTrace()
+
+        mapboxNavigation.stopNavigation()
+        Toast.makeText(this, "Can not calculate the route requested", Toast.LENGTH_SHORT).show()
+    }
+
+
+    override fun onProgressChange(location: Location?, routeProgress: RouteProgress?) {
+        if(routeProgress != null) {
+            lastRouteProgress = routeProgress
+        }
+    }
+
+    override fun userOffRoute(location: Location?) {
+        routeFetcher.findRouteFromRouteProgress(location, lastRouteProgress)
+    }
 
     private fun DirectionsRoute.getRoutePoints(): Array<RoutePoint> {
         val routePoints = arrayListOf<RoutePoint>()
