@@ -1,0 +1,1 @@
+include ':app', ':mapbox-android-vision-0.3.0', ':mapbox-android-vision-ar-0.3.0', ':mapbox-android-vision-ar-native-0.3.0', ':mapbox-android-vision-native-0.3.0'

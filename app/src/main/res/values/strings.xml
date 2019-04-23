@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="acess_token">
+        pk.eyJ1IjoidGVjaG5vdHV0IiwiYSI6ImNqdW1yN2IzNTFubWo0OW43MnlieGEyZDUifQ.EK1MXACdVNBztC-crtmJsw
+    </string>
+    <string name="navigate">Navigate</string>
+</resources>
