@@ -64,8 +64,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         //locationService
         locationObject = locationUpdate(this)
-        editText_source.setText(locationObject.accurateLocation!!.latitude.toString())
-        editText_destination.setText(locationObject.accurateLocation!!.longitude.toString())
+        editText_Longitude.setText(locationObject.accurateLocation!!.latitude.toString())
+        editText_Latitude.setText(locationObject.accurateLocation!!.longitude.toString())
 
         //button listners
         fab_user_location.setOnClickListener {
@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         but_navigation.setOnClickListener {
             getRoute()
+            destination = Point.fromLngLat(73.040607, 19.023230)
             it.visibility = View.GONE
             findViewById<Button>(R.id.but_launch).visibility = View.VISIBLE
         }
@@ -93,7 +94,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         })
         origin =
             Point.fromLngLat(locationObject.accurateLocation!!.longitude, locationObject.accurateLocation!!.latitude)
-        destination = Point.fromLngLat(73.040607, 19.023230)
     }
 
     /*     Mmodular Functions */

@@ -4,4 +4,7 @@
         pk.eyJ1IjoidGVjaG5vdHV0IiwiYSI6ImNqdW1yN2IzNTFubWo0OW43MnlieGEyZDUifQ.EK1MXACdVNBztC-crtmJsw
     </string>
     <string name="navigate">Navigate</string>
+    <string name="logitude">Logitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="start_trip">Start trip</string>
 </resources>
