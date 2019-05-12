@@ -58,11 +58,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         mapview = findViewById(R.id.map)
         mapview.onCreate(savedInstanceState)
 
-        //map loaded listener
-        mapview.getMapAsync(this)
-
         //locationService
         locationObject = locationUpdate(this)
+
+        //map loaded listener
+        mapview.getMapAsync(this)
 
         //button listners
         fab_user_location.setOnClickListener {
