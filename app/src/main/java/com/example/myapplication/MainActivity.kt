@@ -3,13 +3,19 @@ package com.example.myapplication
 import android.content.Context
 import android.content.Intent
 import android.location.Location
-import android.location.LocationManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Message
 import android.os.PersistableBundle
+import android.provider.Settings
 import android.support.v4.app.ActivityCompat
+import android.util.Log
 import android.view.View
 import android.widget.Button
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.geojson.Point
 import com.mapbox.mapboxsdk.Mapbox
@@ -34,6 +40,7 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
+
     private lateinit var mapview: MapView
     private lateinit var map: MapboxMap
     private lateinit var locationObject: locationUpdate
@@ -44,6 +51,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     //main on create class
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
         //permissionshandler
@@ -86,13 +94,21 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     // MapBox map functions
     override fun onMapReady(mapboxMap: MapboxMap) {
-        map = mapboxMap
-        setCameraView(locationObject.accurateLocation)
-        map.setStyle(Style.MAPBOX_STREETS, Style.OnStyleLoaded {
-            enableUserLocationView(it)
-        })
-        origin = Point.fromLngLat(locationObject.accurateLocation!!.longitude, locationObject.accurateLocation!!.latitude)
+        try {
+            map = mapboxMap
+            setCameraView(locationObject.accurateLocation)
+            map.setStyle(Style.MAPBOX_STREETS, Style.OnStyleLoaded {
+                enableUserLocationView(it)
+            })
+            origin = Point.fromLngLat(
+                locationObject.accurateLocation!!.longitude,
+                locationObject.accurateLocation!!.latitude
+            )
+        } catch (e:Exception) {
+            Log.i("app","enable location services")
+            enableLocation();
 
+        }
     }
 
     /*     Mmodular Functions */
@@ -197,4 +213,28 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             mapview.onSaveInstanceState(outState)
         }
     }
+
+    fun enableLocation() {
+      val request = LocationRequest.create().apply {
+          interval = 1000
+          fastestInterval = 5000
+          priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+      }
+
+        val builder = LocationSettingsRequest.Builder().addAllLocationRequests(mutableListOf(request))
+        val client = LocationServices.getSettingsClient(this)
+        val task = client.checkLocationSettings(builder.build())
+
+        task.addOnFailureListener() {
+            if(it is ResolvableApiException) {
+                try {
+                    it.startResolutionForResult(this@MainActivity,7000)
+                } catch (e:Exception) {
+
+                }
+            }
+        }
+    }
+
+
 }
