@@ -22,36 +22,39 @@
             android:text="@string/navigate"
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/but_navigation"
-            mapbox:layout_constraintEnd_toStartOf="@+id/fab_user_location" android:layout_marginEnd="8dp"
             mapbox:layout_constraintBottom_toBottomOf="@+id/map" android:layout_marginBottom="32dp"
             mapbox:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            android:backgroundTint="#2196F3" android:elevation="5dp"/>
+            android:backgroundTint="#2196F3" android:elevation="5dp" android:layout_marginEnd="8dp"
+            mapbox:layout_constraintEnd_toEndOf="parent" tools:visibility="visible"/>
     <Button
             android:text="@string/start_trip"
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/but_launch"
             android:backgroundTint="#FF9800" android:elevation="5dp" android:visibility="gone"
             tools:visibility="gone"
-            mapbox:layout_constraintEnd_toEndOf="@+id/but_navigation"
             mapbox:layout_constraintStart_toStartOf="parent"
-            mapbox:layout_constraintEnd_toStartOf="@+id/fab_user_location"
-            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
-            mapbox:layout_constraintBottom_toTopOf="@+id/but_navigation" android:layout_marginStart="8dp"/>
+            mapbox:layout_constraintBottom_toTopOf="@+id/but_navigation" android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" mapbox:layout_constraintEnd_toEndOf="parent"/>
     <android.support.design.widget.FloatingActionButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:clickable="true"
             android:id="@+id/fab_user_location"
-            mapbox:layout_constraintBottom_toBottomOf="parent" mapbox:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="32dp" android:layout_marginBottom="32dp" mapbox:backgroundTint="#03A9F4"
-            android:scaleType="fitStart" mapbox:fabSize="normal"/>
+            mapbox:fabCustomSize="40dp"
+            mapbox:backgroundTint="#DADADA"
+            android:scaleType="fitStart" mapbox:fabSize="auto"
+            android:layout_marginEnd="16dp"
+            mapbox:layout_constraintEnd_toEndOf="parent"
+            mapbox:layout_constraintTop_toBottomOf="@+id/frameLayout" android:layout_marginTop="16dp"
+            android:src="@android:drawable/ic_menu_mylocation" mapbox:borderWidth="0dp" mapbox:elevation="2dp"
+            mapbox:pressedTranslationZ="4dp"/>
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" mapbox:layout_constraintStart_toStartOf="parent"
             mapbox:layout_constraintTop_toTopOf="parent" mapbox:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/background" android:layout_marginStart="10dp" android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
-            android:elevation="5dp">
+            android:elevation="5dp" android:id="@+id/frameLayout">
 
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -63,7 +66,7 @@
                     mapbox:layout_constraintTop_toTopOf="parent"
                     mapbox:layout_constraintBottom_toBottomOf="parent"
                     mapbox:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-                    android:adjustViewBounds="false" android:cropToPadding="true" android:contentDescription="TODO"/>
+                    android:adjustViewBounds="false" android:cropToPadding="true" android:contentDescription="test"/>
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

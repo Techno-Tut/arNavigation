@@ -1,7 +1,9 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.content.Intent
 import android.location.Location
+import android.location.LocationManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             this,
             "pk.eyJ1IjoidGVjaG5vdHV0IiwiYSI6ImNqdW1yMTdhYjA4cnQ0ZXBwcXFqOWl2YzUifQ.k4Kew7sdjpthA1Wd2BDW2A"
         )
+
         setContentView(R.layout.activity_main)
 
         //targeting the mapbox mapview
