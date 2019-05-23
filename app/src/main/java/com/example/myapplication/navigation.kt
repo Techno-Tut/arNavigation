@@ -1,9 +1,12 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.location.Location
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.Toast
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.api.directions.v5.models.DirectionsRoute
@@ -64,6 +67,10 @@ class navigation : AppCompatActivity(),RouteListener,ProgressChangeListener, Off
         routeFetcher = RouteFetcher(applicationContext, getString(R.string.acess_token))
         routeFetcher.addRouteListener(this)
 
+        popup.setOnClickListener {
+            it.visibility = View.GONE
+        }
+
     }
 
     override fun onResume() {
@@ -73,7 +80,7 @@ class navigation : AppCompatActivity(),RouteListener,ProgressChangeListener, Off
         VisionManager.create()
         VisionManager.start(visionListner)
         VisionManager.setModelPerformanceConfig(
-            ModelPerformanceConfig.Merged(ModelPerformance.On(ModelPerformanceMode.FIXED, ModelPerformanceRate.MEDIUM))
+            ModelPerformanceConfig.Merged(ModelPerformance.On(ModelPerformanceMode.FIXED, ModelPerformanceRate.HIGH))
         )
         VisionManager.start(object : VisionEventsListener {})
         VisionManager.setVideoSourceListener(vision_ar_view)
@@ -88,6 +95,15 @@ class navigation : AppCompatActivity(),RouteListener,ProgressChangeListener, Off
         VisionManager.destroy()
         mapboxNavigation.stopNavigation()
     }
+
+    fun returnHome(view:View) {
+        finish()
+        startActivity(Intent(this, MainActivity::class.java))
+        mapboxNavigation.stopNavigation()
+        VisionManager.destroy()
+    }
+
+
 
     fun getRoute() {
         origin = Point.fromLngLat(73.079, 19.0387)

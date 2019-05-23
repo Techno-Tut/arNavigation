@@ -65,14 +65,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         setContentView(R.layout.activity_main)
 
-        //targeting the mapbox mapview
+        //mapbox target - init - location object init
         mapview = findViewById(R.id.map)
         mapview.onCreate(savedInstanceState)
-
-        //locationService
         locationObject = locationUpdate(this)
-
-        //map loaded listener
         mapview.getMapAsync(this)
 
         //button listners
@@ -87,7 +83,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         but_launch.setOnClickListener {
-            startActivity(Intent(this, navigation::class.java))
+            startActivityForResult(Intent(this, navigation::class.java),1)
         }
 
     }
@@ -164,7 +160,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
-    fun managePermissions() {
+    private fun managePermissions() {
         ActivityCompat.requestPermissions(
             this,
             arrayOf(
@@ -207,6 +203,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         mapview.onLowMemory()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
         super.onSaveInstanceState(outState, outPersistentState)
         if (outState != null) {
@@ -214,7 +214,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun enableLocation() {
+    private fun enableLocation() {
       val request = LocationRequest.create().apply {
           interval = 1000
           fastestInterval = 5000

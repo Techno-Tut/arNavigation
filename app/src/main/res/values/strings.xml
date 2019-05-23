@@ -7,4 +7,5 @@
     <string name="logitude">Logitude</string>
     <string name="latitude">Latitude</string>
     <string name="start_trip">Start trip</string>
+    <string name="rotate_screen">rotate screen</string>
 </resources>
